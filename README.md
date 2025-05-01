@@ -1,4 +1,7 @@
 # dotnet-tool-execute
+[![NuGet package dotnet-tool-execute (with prereleases)](https://img.shields.io/nuget/vpre/dotnet-tool-execute?label=dotnet-tool-execute)](https://nuget.org/packages/dotnet-tool-execute)
+
+
 A .NET tool which installs and executes .NET tools
 
 ## Getting Started
