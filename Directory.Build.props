@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <BaseArtifactsPath>$(MSBuildThisFileDirectory)artifacts\</BaseArtifactsPath>
+    <DefaultItemExcludes>*log</DefaultItemExcludes>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <MSBuildTreatWarningsAsErrors>true</MSBuildTreatWarningsAsErrors>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+</Project>

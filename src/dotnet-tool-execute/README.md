@@ -1,4 +1,4 @@
-# dotnet-tool-execute
+﻿# dotnet-tool-execute
 A .NET tool which installs and executes .NET tools
 
 ## Getting Started

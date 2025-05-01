@@ -1,0 +1,33 @@
+<Project>
+  <PropertyGroup>
+    <Authors>jeffkl</Authors>
+    <Copyright>(c). All rights reserved.</Copyright>
+    <PackageProjectUrl>https://github.com/jeffkl/dotnet-tool-execute</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmePath>$(MSBuildProjectDirectory)/$(PackageReadmeFile)</PackageReadmePath>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicensePath>$(MSBuildThisFileDirectory)$(PackageLicenseFile)</PackageLicensePath>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageIconPath>$(MSBuildThisFileDirectory)branding\$(PackageIcon)</PackageIconPath>
+    <RepositoryUrl>https://github.com/jeffkl/dotnet-tool-execute.git</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <IncludeSymbols Condition="'$(IncludeSymbols)' == ''">true</IncludeSymbols>
+    <SymbolPackageFormat Condition="'$(SymbolPackageFormat)' == ''">snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <None Include="$(PackageIconPath)"
+          Pack="true"
+          PackagePath="\"
+          Visible="false" />
+
+    <None Include="$(PackageLicensePath)"
+          Pack="true"
+          PackagePath="$(PackageLicenseFile)"
+          Visible="false" />
+
+    <None Include="$(PackageReadmePath)"
+          Pack="true"
+          PackagePath="$(PackageReadmeFile)" />
+  </ItemGroup>
+</Project>

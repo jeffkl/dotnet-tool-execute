@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DotnetToolExecute</RootNamespace>
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+    <PackAsTool>true</PackAsTool>
+    <RollForward>LatestMajor</RollForward>
+    <ToolCommandName>dtx</ToolCommandName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>A .NET tool that can install and execute other .NET tools.</Description>
+    <PackageTags>dtx dotnet execute exec</PackageTags>
+    <ArtifactsPath>$(BaseArtifactsPath)\$(MSBuildProjectName)\</ArtifactsPath>
+  </PropertyGroup>
+</Project>
