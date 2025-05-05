@@ -23,7 +23,7 @@ You can use the `dtx` tool to run MCP servers that are available as .NET tools.
         "command": "dtx",
         "args": [
           "my.package.id",                       // The name of the NuGet package
-          "----source",
+          "--source",
           "https://api.nuget.org/v3/index.json", // Specify feed of your MCP server in case the user doesn't have it in their NuGet config
           "--prerelease",                        // Optionally include pre-release packages
           "--",                                  // Arguments after this '--' are passed to the tool
