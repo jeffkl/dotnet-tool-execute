@@ -60,6 +60,7 @@ Options:
   -a, --arch <arch>            The target architecture.
   --allow-downgrade            Allow package downgrade when installing a .NET tool package.
   --allow-roll-forward         Allow a .NET tool to roll forward to newer versions of the .NET runtime if the runtime it targets isn't installed.
+  -s, --silent                 Suppress all output while installing the tool.
   -?, -h, --help               Show command line help.
 ```
 

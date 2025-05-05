@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -15,98 +15,19 @@ public static class Program
             Debugger.Launch();
         }
 
-        (string? toolName, List<string> args1, List<string> args2) = ParseArgs(args);
+        ParsedArguments arguments = ParsedArguments.Parse(args);
 
-        if (toolName == null)
+        if (arguments.ToolName == null || arguments.ShowHelp)
         {
             return PrintUsage();
         }
 
-        (int installToolExitCode, FileInfo? toolExecutable) = InstallTool(toolName, args1);
-
-        if (installToolExitCode != 0 || toolExecutable == null)
+        if (!TryInstallTool(arguments, out int exitCode, out FileInfo? toolExecutable))
         {
-            return installToolExitCode;
+            return exitCode;
         }
 
-        return RunTool(toolExecutable, args2);
-    }
-
-    private static (int, FileInfo?) InstallTool(string toolName, List<string> args1)
-    {
-        DirectoryInfo toolPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dtx", toolName));
-
-        using Process process = new Process
-        {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = "dotnet",
-                Arguments = string.Join(" ", ["tool", "install", toolName, "--tool-path", toolPath, .. args1]),
-            },
-        };
-
-        process.Start();
-
-        process.WaitForExit();
-
-        return (process.ExitCode, process.ExitCode == 0 ? toolPath.EnumerateFiles().FirstOrDefault() : null);
-    }
-
-    private static (string? toolName, List<string> args1, List<string> args2) ParseArgs(string[] args)
-    {
-        var args1 = new List<string>();
-        var args2 = new List<string>();
-        bool firstArgs = true;
-
-        string? toolName = null;
-
-        for (int i = 0; i < args.Length; i++)
-        {
-            string? arg = args[i];
-            if (i == 0)
-            {
-                toolName = arg;
-                continue;
-            }
-
-            if (arg == "--")
-            {
-                firstArgs = false;
-                continue;
-            }
-
-            if (firstArgs)
-            {
-                switch (arg)
-                {
-                    case "--global":
-                    case "-g":
-                    case "--local":
-                        continue;
-
-                    case "--help":
-                    case "-h":
-                    case "-?":
-                        toolName = null;
-                        continue;
-
-                    case "--tool-path":
-                    case "--tool-manifest":
-                    case "--create-manifest-if-needed":
-                        i++;
-                        continue;
-                    default:
-                        args1.Add(arg);
-                        break;
-                }
-            }
-            else
-            {
-                args2.Add(arg);
-            }
-        }
-
-        return (toolName, args1, args2);
+        return RunTool(toolExecutable, arguments);
     }
 
     private static int PrintUsage()
@@ -135,19 +56,20 @@ Options:
   -a, --arch <arch>            The target architecture.
   --allow-downgrade            Allow package downgrade when installing a .NET tool package.
   --allow-roll-forward         Allow a .NET tool to roll forward to newer versions of the .NET runtime if the runtime it targets isn't installed.
+  -s, --silent                 Suppress all output while installing the tool.
   -?, -h, --help               Show command line help.");
 
         return 0;
     }
 
-    private static int RunTool(FileInfo toolExecutable, List<string> args2)
+    private static int RunTool(FileInfo toolExecutable, ParsedArguments arguments)
     {
         using Process process = new Process
         {
             StartInfo = new ProcessStartInfo
             {
                 FileName = toolExecutable.FullName,
-                Arguments = string.Join(" ", args2),
+                Arguments = string.Join(" ", arguments.Args2),
             },
         };
 
@@ -158,5 +80,24 @@ Options:
         process.WaitForExit();
 
         return process.ExitCode;
+    }
+
+    private static bool TryInstallTool(ParsedArguments arguments, out int exitCode, [NotNullWhen(true)] out FileInfo? toolExecutable)
+    {
+        if (arguments.ToolName == null)
+        {
+            throw new ArgumentNullException(nameof(arguments.ToolName));
+        }
+
+        toolExecutable = null;
+
+        if (!ToolInstaller.TryStartAndWaitForExit(arguments.ToolName, arguments.Silent, arguments.Args1, out exitCode, out DirectoryInfo? toolPath))
+        {
+            return false;
+        }
+
+        toolExecutable = toolPath.EnumerateFiles().First();
+
+        return true;
     }
 }
