@@ -12,4 +12,7 @@
     <PackageTags>dtx dotnet execute exec</PackageTags>
     <ArtifactsPath>$(BaseArtifactsPath)\$(MSBuildProjectName)\</ArtifactsPath>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="D:\dotnet-tool-execute\/README.md" />
+  </ItemGroup>
 </Project>

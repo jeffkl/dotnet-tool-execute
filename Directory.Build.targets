@@ -4,7 +4,7 @@
     <Copyright>(c). All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/jeffkl/dotnet-tool-execute</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReadmePath>$(MSBuildProjectDirectory)/$(PackageReadmeFile)</PackageReadmePath>
+    <PackageReadmePath>$(MSBuildThisFileDirectory)/$(PackageReadmeFile)</PackageReadmePath>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageLicensePath>$(MSBuildThisFileDirectory)$(PackageLicenseFile)</PackageLicensePath>
     <PackageIcon>Icon.png</PackageIcon>
