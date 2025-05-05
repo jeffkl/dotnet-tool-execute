@@ -14,15 +14,22 @@ This will install `dtx` globally and add it to your `%PATH%`.
 
 ## MCP Servers
 You can use the `dtx` tool to run MCP servers that are available as .NET tools. 
-```json
-// settings.json
+```jsonc
 {
   "mcp": {
     "servers": {
       "my-mcp-server": {
         "type": "stdio",
         "command": "dtx",
-        "args": [ "packageId", "--", "arg1", "arg2" ]
+        "args": [
+          "my.package.id",                       // The name of the NuGet package
+          "----source",
+          "https://api.nuget.org/v3/index.json", // Specify feed of your MCP server in case the user doesn't have it in their NuGet config
+          "--prerelease",                        // Optionally include pre-release packages
+          "--",                                  // Arguments after this '--' are passed to the tool
+          "arg1",
+          "arg2"
+        ]
       }
     }
   }
