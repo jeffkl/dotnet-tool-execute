@@ -7,7 +7,7 @@ A .NET tool which installs and executes .NET tools.
 ## Getting Started
 To install the `dtx` tool, run the following command:
 ```
-dotnet tool install --global dotnet-tool-execute --prelease --add-source https://api.nuget.org/v3/index.json --ignore-failed-sources
+dotnet tool install --global dotnet-tool-execute --prerelease --add-source https://api.nuget.org/v3/index.json --ignore-failed-sources
 ```
 
 This will install `dtx` globally and add it to your `%PATH%`.
