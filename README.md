@@ -1,16 +1,34 @@
-# dotnet-tool-execute
+# dotnet-tool-execute (dtx)
 [![NuGet package dotnet-tool-execute (with prereleases)](https://img.shields.io/nuget/vpre/dotnet-tool-execute?label=dotnet-tool-execute)](https://nuget.org/packages/dotnet-tool-execute)
 
 
-A .NET tool which installs and executes .NET tools
+A .NET tool which installs and executes .NET tools.
 
 ## Getting Started
-To install the tool, run the following command:
+To install the `dtx` tool, run the following command:
 ```
 dotnet tool install --global dotnet-tool-execute --prelease --add-source https://api.nuget.org/v3/index.json --ignore-failed-sources
 ```
 
-This will install the tool globally and add it to your PATH.
+This will install `dtx` globally and add it to your `%PATH%`.
+
+## MCP Servers
+You can use the `dtx` tool to run MCP servers that are available as .NET tools. 
+```json
+// settings.json
+{
+  "mcp": {
+    "servers": {
+      "my-mcp-server": {
+        "type": "stdio",
+        "command": "dtx",
+        "args": [ "packageId", "--", "arg1", "arg2" ]
+      }
+    }
+  }
+}
+
+```
 
 ## Usage
 ```
